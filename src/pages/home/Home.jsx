@@ -9,13 +9,14 @@ import useFetch from '../../hooks/useFetch'; // Custom hook import
 import { setCoinData } from '../../store/homeSlice'; // Redux action import
 
 import Loading from '../../components/loading/Loading'; // Custom component imports
-import CoinCard from '../../coinCard/CoinCard';
+import CoinCard from '../../components/coinCard/CoinCard';
 import GlobalMarketCap from '../../components/GlobalMarketCap';
 import TopThreeCoin from '../../components/highlightsCard/TopThreeCoin';
 import CurrencyExchange from '../../components/currencyExchange/CurrencyExchange';
 import CompanyList from '../../components/companyHolding/CompanyList';
 
 import '../../index.css'; // CSS import
+
 
 const Triangle = ({ isUp }) => {
   return <div className={`triangle ${isUp ? 'up' : 'down'}`} />;
@@ -205,16 +206,17 @@ console.log(searchResults)
         </span>
         <button onClick={() => handlePagination('forward')}>Next</button>
       </div>
-      <div className='exchange'>
+      <div className={`${loading ? 'blur' : ''}`}>
         <CurrencyExchange />
       </div>
 
-      <div>
+      <div  className={`${loading ? 'blur' : ''}`}>
         <h1 className='w-11/12 p-2 mx-auto text-2xl font-extrabold text-center text-gray-700 border-b-2 shadow-lg'>
           Top Five Public Companies Holdings (Bitcoin)
         </h1>
         <CompanyList coinName={'bitcoin'} />
       </div>
+
     </div>
   );
 };

@@ -1,29 +1,87 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
 import useFetch from '../../hooks/useFetch';
-import './CoinDetails.css';
+import '../../index.css';
 
-const CoinDetails = () => {
-  const { coinId } = useParams();
-  const { data, loading, error } = useFetch(`/coins/${coinId}`);
+function CoinDetails({ coinid }) {
+  const { data, loading, error } = useFetch(`/coins/${coinid}`);
+  const [cosmosData, setCosmosData] = useState(null);
+  console.log(data);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  useEffect(() => {
+    if (data) {
+      setCosmosData(data);
+    }
+  }, [data]);
 
-  if (!data) return null;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
+
+  if (!cosmosData) {
+    return null; // or a fallback UI
+  }
 
   return (
-    <section className='coin-details'>
-      <p className='nav'><b>Crypto</b> {'>'} {coinId}</p>
-      <div className='coin-header glass'>
-        <img src={data.image.large} alt={data.name} className='coin-image glass' />
-        <h1 className='glss'>{data.name} ({data.symbol.toUpperCase()})</h1>
-        <p className='market-rank'>Market Cap Rank: #{data.market_cap_rank}</p>
-      </div>
-
-    
-    </section>
+    <div className="container p-4 mx-auto">
+      <h1 className="my-4 text-3xl font-bold text-center">{cosmosData?.name}</h1>
+      <CosmosCard data={cosmosData} />
+      <CosmosStats data={cosmosData} />
+      <CosmosLinks data={cosmosData} />
+    </div>
   );
-};
+}
+
+function CosmosCard({ data }) {
+  return (
+    <div className="max-w-sm mx-auto my-4 overflow-hidden rounded shadow-lg">
+      <img className="w-full" src={data?.image?.large} alt={data?.name} />
+      <div className="px-6 py-4">
+        <div className="mb-2 text-xl font-bold">{data?.name} ({data?.symbol?.toUpperCase()})</div>
+        <p className="text-base text-gray-700">{data?.description?.en}</p>
+      </div>
+    </div>
+  );
+}
+
+function CosmosStats({ data }) {
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-bold">Market Cap Rank</h2>
+        <p>{data?.market_cap_rank}</p>
+      </div>
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-bold">Current Price</h2>
+        <p>${data?.market_data?.current_price?.usd}</p>
+      </div>
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-bold">Twitter Followers</h2>
+        <p>{data?.community_data?.twitter_followers}</p>
+      </div>
+      {/* Add more stats as needed */}
+    </div>
+  );
+}
+
+function CosmosLinks({ data }) {
+  return (
+    <div className="p-4 my-4 bg-white rounded shadow">
+      <h2 className="text-xl font-bold">Links</h2>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {data?.links?.homepage?.map((link, index) => (
+          <a key={index} href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+            {link}
+          </a>
+        ))}
+        {/* Add more links as needed */}
+      </div>
+    </div>
+  );
+}
 
 export default CoinDetails;

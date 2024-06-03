@@ -37,7 +37,7 @@ const TopThreeCoin = () => {
             const priceChangeFormatted = typeof priceChange === 'number' ? priceChange.toFixed(2) : 'N/A';
 
             return (
-              <li key={index} className="flex items-center justify-between py-2 border-gray-200">
+              <Link to={`/coin/${coin.item.id}`} key={index} className="flex items-center justify-between py-2 border-gray-200">
                 <div className="flex items-center">
                   <img className="w-8 h-8 mr-2 bg-gray-200 rounded-full" src={coin.item.large} alt={coin.item.name} />
                   <span>{coin.item.name}</span>
@@ -48,7 +48,7 @@ const TopThreeCoin = () => {
                     {priceChangeFormatted}%
                   </span>
                 </div>
-              </li>
+              </Link>
             );
           })}
         </ul>

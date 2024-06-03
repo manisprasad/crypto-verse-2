@@ -3,7 +3,7 @@ import useFetch from '../../hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTrendingCoinData } from '../../store/homeSlice';
 import { Link } from 'react-router-dom';
-import CoinCard from '../../coinCard/CoinCard';
+import CoinCard from '../../components/coinCard/CoinCard';
 
 const TrendingCrypto = () => {
   const dispatch = useDispatch();
