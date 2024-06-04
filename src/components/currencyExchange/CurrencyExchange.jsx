@@ -56,6 +56,7 @@ const CurrencyExchange = () => {
             <select
               name="crypto"
               id="cryptoSelect"
+              defaultValue={"Manis"}
               className="w-full px-4 py-2 mt-2 text-white bg-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={selectedCrypto}
               onChange={(e) => setSelectedCrypto(e.target.value)}

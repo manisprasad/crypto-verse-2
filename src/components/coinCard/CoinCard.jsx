@@ -2,7 +2,7 @@ import React from 'react';
 // import './CoinCard.css';
 import '../../index.css'
 import { useSelector } from 'react-redux';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
+// import { Sparklines, SparklinesLine } from 'react-sparklines';
 // import useFetch from '../../hooks/useFetch';
 // import { set } from 'lodash';
 
